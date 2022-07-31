@@ -349,8 +349,10 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/Objects/Interactable.cs"
+"Assets/Objects/TestInteractable.cs"
 "Assets/PlayerCharacter/MouseLook.cs"
-"Assets/PlayerCharacter/PlayerMovement.cs"
+"Assets/PlayerCharacter/PlayerController.cs"
 -langversion:9.0
 
 /deterministic
