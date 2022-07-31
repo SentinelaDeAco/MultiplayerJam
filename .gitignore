@@ -73,3 +73,7 @@ crashlytics-build.properties
 *.digestcache
 *.json
 *.traceevents
+Library/Bee/tundra.digestcache
+Library/Bee/fullprofile.json
+Library/Bee/backend_profiler0.traceevents
+Library/ArtifactDB
