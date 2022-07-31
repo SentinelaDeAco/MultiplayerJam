@@ -60,6 +60,7 @@
     <Compile Include="Assets\PlayerCharacter\PlayerController.cs" />
     <Compile Include="Assets\Objects\TestInteractable.cs" />
     <Compile Include="Assets\PlayerCharacter\MouseLook.cs" />
+    <Compile Include="Assets\Environment\DeathZone.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -7,12 +7,15 @@ public class PlayerController : MonoBehaviour
     [Header("General")]
     [SerializeField] private CharacterController controller = default;
     [SerializeField] private Camera playerCamera = default;
+    [SerializeField] private Transform spawnPoint = default;
     [SerializeField] private float speed = default;
     [SerializeField] private bool canMove = true;
     [SerializeField] private bool canJump = true;
+    [SerializeField] private bool canFall = true;
     [SerializeField] private bool canInteract = true;
+    [SerializeField] public bool isAlive = true;
 
-    [Header("Jump")]
+    [Header("Gravity & Jumping")]
     [SerializeField] private bool isGrounded;
     [SerializeField] private float gravity = default;
     [SerializeField] private float jumpSpeed = default;
@@ -29,10 +32,27 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (canMove) 
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isAlive)
+        {
+            canMove = true;
+            canInteract = true;
+            canJump = true;
+        }
+
+        if (!isAlive)
+        {
+            HandleRespawn();
+            canMove = false;
+            canInteract = false;
+            canJump = false;
+        }
+
+        if (canMove)
             HandleMovement();
 
-        if (canJump) 
+        if (canJump)
             HandleJumping();
 
         if (canInteract)
@@ -40,6 +60,9 @@ public class PlayerController : MonoBehaviour
             HandleInteractCheck();
             HandleInteractInput();
         }
+
+        if (canFall)
+            HandleGravity();
     }
 
     private void HandleMovement()
@@ -54,10 +77,12 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumping()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
         if (isGrounded && Input.GetKeyDown("space"))
             velocity.y = jumpSpeed;
+    }
+
+    private void HandleGravity()
+    {
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
@@ -95,5 +120,21 @@ public class PlayerController : MonoBehaviour
         {
             currentInteractable.OnInteract();
         }
+    }
+
+    private void HandleRespawn()
+    {
+        if (Input.GetKeyDown("e"))
+        {
+            Vector3 distance = controller.gameObject.transform.position - spawnPoint.position;
+            controller.Move(-distance);
+            controller.gameObject.transform.rotation = spawnPoint.rotation;
+            isAlive = true;
+        }
+    }
+
+    public void KillPlayer()
+    {
+        isAlive = false;
     }
 }
