@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("General")]
     [SerializeField] private CharacterController controller = default;
     [SerializeField] private Camera playerCamera = default;
+    [SerializeField] private Canvas ui = default;
     [SerializeField] private Transform spawnPoint = default;
     [SerializeField] private float speed = default;
     [SerializeField] private bool canMove = true;
@@ -129,12 +130,16 @@ public class PlayerController : MonoBehaviour
             Vector3 distance = controller.gameObject.transform.position - spawnPoint.position;
             controller.Move(-distance);
             controller.gameObject.transform.rotation = spawnPoint.rotation;
+            ui.GetComponent<UiController>().SetDeathScreen(false);
             isAlive = true;
+            playerCamera.GetComponent<MouseLook>().AllowLooking(true);
         }
     }
 
     public void KillPlayer()
     {
         isAlive = false;
+        playerCamera.GetComponent<MouseLook>().AllowLooking(false);
+        ui.GetComponent<UiController>().SetDeathScreen(true);
     }
 }
