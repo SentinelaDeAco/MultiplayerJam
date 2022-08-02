@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Room1Manager : GameManager
 {
-    //[SerializeField] private List<GameObject> buttonList = default;
-
-    void Update()
-    {
-
-    }
-
     protected override void OnVictory()
     {
         ui.GetComponent<UiController>().SetSuccessText(true);
