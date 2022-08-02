@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +32,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask interactionMask = default;
     private Interactable currentInteractable;
 
+    private PhotonView view;
+
+    private void Start()
+    {
+        view = GetComponent<PhotonView>();
+    }
+
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -50,16 +58,19 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
 
-        if (canMove)
-            HandleMovement();
-
-        if (canJump)
-            HandleJumping();
-
-        if (canInteract)
+        if (view.IsMine)
         {
-            HandleInteractCheck();
-            HandleInteractInput();
+            if (canMove)
+                HandleMovement();
+
+            if (canJump)
+                HandleJumping();
+
+            if (canInteract)
+            {
+                HandleInteractCheck();
+                HandleInteractInput();
+            }
         }
 
         if (canFall)

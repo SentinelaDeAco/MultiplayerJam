@@ -15,5 +15,7 @@ public class TestInteractable : Interactable
     }
 
     public override void OnLoseFocus()
-    {}
+    {
+        interactView.SetActive(false);
+    }
 }
