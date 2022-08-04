@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform spawnPoint = default;
     [SerializeField] private float speed = default;
     [SerializeField] private bool canMove = true;
+    [SerializeField] private bool canLook = true;
     [SerializeField] private bool canJump = true;
     [SerializeField] private bool canFall = true;
     [SerializeField] private bool canInteract = true;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
         if (isAlive)
         {
+            canLook = true;
             canMove = true;
             canInteract = true;
             canJump = true;
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour
         if (!isAlive)
         {
             HandleRespawn();
+            canLook = false;
             canMove = false;
             canInteract = false;
             canJump = false;
@@ -60,6 +63,9 @@ public class PlayerController : MonoBehaviour
 
         if (view.IsMine)
         {
+            if (canLook)
+                HandleLook();
+            
             if (canMove)
                 HandleMovement();
 
@@ -75,6 +81,11 @@ public class PlayerController : MonoBehaviour
 
         if (canFall)
             HandleGravity();
+    }
+
+    private void HandleLook()
+    {
+        playerCamera.GetComponent<MouseLook>().HandleLook();
     }
 
     private void HandleMovement()
@@ -143,14 +154,12 @@ public class PlayerController : MonoBehaviour
             controller.gameObject.transform.rotation = spawnPoint.rotation;
             ui.GetComponent<UiController>().SetDeathScreen(false);
             isAlive = true;
-            playerCamera.GetComponent<MouseLook>().AllowLooking(true);
         }
     }
 
     public void KillPlayer()
     {
         isAlive = false;
-        playerCamera.GetComponent<MouseLook>().AllowLooking(false);
         ui.GetComponent<UiController>().SetDeathScreen(true);
     }
 }

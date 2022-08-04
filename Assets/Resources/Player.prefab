@@ -187,6 +187,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   speed: 12
   canMove: 1
+  canLook: 1
   canJump: 1
   canFall: 1
   canInteract: 1
