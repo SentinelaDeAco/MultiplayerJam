@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Room1Manager : GameManager
 {
-    protected override void OnVictory()
+    private void OnEnable()
     {
-        ui.GetComponent<UiController>().SetSuccessText(true);
+        Actions.OnButtonPress += CheckForSolution;
     }
 
-    protected override void OnFail()
+    private void OnDisable()
     {
-        FindObjectOfType<PlayerController>().KillPlayer();
+        Actions.OnButtonPress -= CheckForSolution;
     }
 
-    public void CheckForSolution(bool isSolution)
+    public void CheckForSolution(bool isSolution, PlayerController player)
     {
         if (isSolution)
             OnVictory();
         else
-            OnFail();
+            OnFailure(player);
     }
 }

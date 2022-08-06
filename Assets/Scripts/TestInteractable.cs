@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class TestInteractable : Interactable
 {
-    [SerializeField] private GameObject interactView;
-
-    public override void OnFocus()
-    {}
-
     public override void OnInteract()
     {
+        base.OnInteract();
         interactView.SetActive(true);
     }
 

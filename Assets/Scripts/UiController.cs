@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UiController : MonoBehaviour
 {
-    [SerializeField] private GameObject crosshair = default;
     [SerializeField] private GameObject deathScreen = default;
     [SerializeField] private GameObject successText = default;
 

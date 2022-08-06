@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private CharacterController controller = default;
-    [SerializeField] private Camera playerCamera = default;
-    [SerializeField] private Canvas ui = default;
-    [SerializeField] private Transform spawnPoint = default;
+    //[SerializeField] private Transform spawnPoint = default;
     [SerializeField] private float speed = default;
     [SerializeField] private bool canMove = true;
-    [SerializeField] private bool canLook = true;
     [SerializeField] private bool canJump = true;
     [SerializeField] private bool canFall = true;
     [SerializeField] private bool canInteract = true;
-    [SerializeField] public bool isAlive = true;
+    [SerializeField] private bool isAlive = true;
+    [SerializeField] private float rotationSpeed;
 
     [Header("Gravity & Jumping")]
     [SerializeField] private bool isGrounded;
@@ -27,17 +26,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundMask = default;
     private Vector3 velocity;
 
-    [Header("Interaction")]
-    [SerializeField] private Vector3 interactionRayPoint = default;
-    [SerializeField] private float interactionDistance = default;
-    [SerializeField] private LayerMask interactionMask = default;
-    private Interactable currentInteractable;
-
     private PhotonView view;
+
+    public static Action<PlayerController> OnLocalPlayerCreated;
 
     private void Start()
     {
         view = GetComponent<PhotonView>();
+        
+        if (view.IsMine)
+            OnLocalPlayerCreated?.Invoke(this);
+
+        Actions.OnPlayerJoin(this);
     }
 
     void Update()
@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
 
         if (isAlive)
         {
-            canLook = true;
             canMove = true;
             canInteract = true;
             canJump = true;
@@ -54,18 +53,14 @@ public class PlayerController : MonoBehaviour
 
         if (!isAlive)
         {
-            HandleRespawn();
-            canLook = false;
             canMove = false;
             canInteract = false;
             canJump = false;
+            CheckForRespawnInput();
         }
 
         if (view.IsMine)
         {
-            if (canLook)
-                HandleLook();
-            
             if (canMove)
                 HandleMovement();
 
@@ -74,8 +69,7 @@ public class PlayerController : MonoBehaviour
 
             if (canInteract)
             {
-                HandleInteractCheck();
-                HandleInteractInput();
+
             }
         }
 
@@ -83,18 +77,20 @@ public class PlayerController : MonoBehaviour
             HandleGravity();
     }
 
-    private void HandleLook()
+    private void OnDestroy()
     {
-        playerCamera.GetComponent<MouseLook>().HandleLook();
+        Actions.OnPlayerLeave(this);
     }
 
     private void HandleMovement()
     {
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
 
+        transform.Rotate(Vector3.up * mouseX);
         controller.Move(move * speed * Time.deltaTime);
     }
 
@@ -114,52 +110,32 @@ public class PlayerController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    private void HandleInteractCheck()
+    public void CheckForRespawnInput()
     {
-        if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), 
-            out RaycastHit hit, interactionDistance))
-        {
-            if (hit.collider.gameObject.layer == 6 && (currentInteractable == null || 
-                hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
-            {
-                hit.collider.TryGetComponent(out currentInteractable);
-
-                if (currentInteractable)
-                    currentInteractable.OnFocus();
-            }
-        }
-        else if (currentInteractable)
-        {
-            currentInteractable.OnLoseFocus();
-            currentInteractable = null;
-        }
+        if (Input.GetKeyDown("x"))
+            Actions.OnPlayerRespawn();
     }
 
-    private void HandleInteractInput()
+    public void RespawnPlayer(Transform spawnPoint)
     {
-        if (Input.GetKeyDown("e") && currentInteractable != null && Physics.Raycast(
-            playerCamera.ViewportPointToRay(interactionRayPoint), 
-            out RaycastHit hit, interactionDistance, interactionMask))
-        {
-            currentInteractable.OnInteract();
-        }
-    }
-
-    private void HandleRespawn()
-    {
-        if (Input.GetKeyDown("e"))
-        {
-            Vector3 distance = controller.gameObject.transform.position - spawnPoint.position;
-            controller.Move(-distance);
-            controller.gameObject.transform.rotation = spawnPoint.rotation;
-            ui.GetComponent<UiController>().SetDeathScreen(false);
-            isAlive = true;
-        }
+        Vector3 distance = controller.gameObject.transform.position - spawnPoint.position;
+        controller.Move(-distance);
+        controller.gameObject.transform.rotation = spawnPoint.rotation;
+        isAlive = true;
     }
 
     public void KillPlayer()
     {
         isAlive = false;
-        ui.GetComponent<UiController>().SetDeathScreen(true);
+    }
+
+    public bool CheckStatus()
+    {
+        return isAlive;
+    }
+
+    public int RetrieveId()
+    {
+        return view.ViewID;
     }
 }
