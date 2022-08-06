@@ -6,12 +6,22 @@ public class ButtonEvent : Interactable
 {
     [SerializeField] private bool isSolution = default;
 
-    public override void OnFocus(){}
-
     public override void OnInteract()
     {
-        GameObject.FindWithTag("GameController").GetComponent<Room1Manager>().CheckForSolution(isSolution);
-    }
+        float closestDist = 1000f;
+        PlayerController closestPlayer = null;
 
-    public override void OnLoseFocus(){}
+        foreach (PlayerController player in GameManager.playerList)
+        {
+            float distance = Vector3.Distance(player.transform.position, this.transform.position);
+            if (distance < closestDist)
+            {
+                closestPlayer = player;
+                closestDist = distance;
+            }
+        }
+
+        if (closestPlayer != null)
+            Actions.OnButtonPress(isSolution, closestPlayer);
+    }
 }
