@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Room1Manager : GameManager
 {
-    private void OnEnable()
-    {
+    protected override void OnEnable()
+    {    
+        base.OnEnable();
         Actions.OnButtonPress += CheckForSolution;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         Actions.OnButtonPress -= CheckForSolution;
     }
 

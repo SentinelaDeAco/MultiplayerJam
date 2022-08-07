@@ -14,7 +14,7 @@ public abstract class GameManager : MonoBehaviour
         playerList = new List<PlayerController>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         Actions.OnPlayerJoin += OnPlayerJoin;
         Actions.OnPlayerRespawn += RestartGame;
@@ -22,7 +22,7 @@ public abstract class GameManager : MonoBehaviour
         Actions.OnPlayerLeave += OnPlayerLeave;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         Actions.OnPlayerJoin -= OnPlayerJoin;
         Actions.OnPlayerRespawn -= RestartGame;
