@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundDistance = default;
     [SerializeField] private Transform groundCheck = default;
     [SerializeField] private LayerMask groundMask = default;
-    private Vector3 velocity;
 
+    private Vector3 velocity;
     private PhotonView view;
 
     public static Action<PlayerController> OnLocalPlayerCreated;
