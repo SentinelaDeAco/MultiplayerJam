@@ -21,6 +21,6 @@ public class HostAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("RoomTest");
+        PhotonNetwork.LoadLevel("Room1");
     }
 }

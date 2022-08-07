@@ -10,7 +10,6 @@ public class DeathZone : MonoBehaviour
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             Actions.OnPlayerDeath(player);
-            //FindObjectOfType<GameManager>().OnFailure();
         }
     }
 }

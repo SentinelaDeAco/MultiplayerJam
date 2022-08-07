@@ -81,7 +81,7 @@ CharacterController:
   m_Height: 1.8
   m_Radius: 0.6
   m_SlopeLimit: 45
-  m_StepOffset: 1
+  m_StepOffset: 0.5
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -106,8 +106,8 @@ MonoBehaviour:
   isAlive: 1
   rotationSpeed: 400
   isGrounded: 0
-  gravity: -75
-  jumpSpeed: 25
+  gravity: -40
+  jumpSpeed: 13
   groundDistance: 0.2
   groundCheck: {fileID: 3553429204267069551}
   groundMask:
