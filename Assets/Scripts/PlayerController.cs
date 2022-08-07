@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool canMove = true;
     [SerializeField] private bool canJump = true;
     [SerializeField] private bool canFall = true;
-    [SerializeField] private bool canInteract = true;
     [SerializeField] private bool isAlive = true;
     [SerializeField] private float rotationSpeed;
 
@@ -38,6 +37,9 @@ public class PlayerController : MonoBehaviour
             OnLocalPlayerCreated?.Invoke(this);
 
         Actions.OnPlayerJoin(this);
+
+        if (view.ViewID > 1001)
+            controller.transform.position = new Vector3(2.0f, 3.0f, -60.0f);
     }
 
     void Update()
@@ -47,14 +49,12 @@ public class PlayerController : MonoBehaviour
         if (isAlive)
         {
             canMove = true;
-            canInteract = true;
             canJump = true;
         }
 
         if (!isAlive)
         {
             canMove = false;
-            canInteract = false;
             canJump = false;
             CheckForRespawnInput();
         }
@@ -66,11 +66,6 @@ public class PlayerController : MonoBehaviour
 
             if (canJump)
                 HandleJumping();
-
-            if (canInteract)
-            {
-
-            }
         }
 
         if (canFall)

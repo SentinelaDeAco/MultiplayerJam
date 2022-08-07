@@ -102,7 +102,6 @@ MonoBehaviour:
   canMove: 1
   canJump: 1
   canFall: 1
-  canInteract: 1
   isAlive: 1
   rotationSpeed: 400
   isGrounded: 0
