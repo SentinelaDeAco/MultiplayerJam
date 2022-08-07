@@ -117,6 +117,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Actions.cs" />
     <Compile Include="Assets\Scripts\SliderScript.cs" />
+    <Compile Include="Assets\Scripts\SettingsMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -36,10 +36,7 @@ public class PlayerController : MonoBehaviour
         if (view.IsMine)
             OnLocalPlayerCreated?.Invoke(this);
 
-        Actions.OnPlayerJoin(this);
-
-        if (view.ViewID > 1001)
-            controller.transform.position = new Vector3(2.0f, 3.0f, -60.0f);
+        Actions.OnPlayerJoin(this, view.ViewID);
     }
 
     void Update()
@@ -132,5 +129,10 @@ public class PlayerController : MonoBehaviour
     public int RetrieveId()
     {
         return view.ViewID;
+    }
+
+    public void MovePlayer(Vector3 position)
+    {
+        controller.transform.position = position;
     }
 }

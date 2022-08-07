@@ -63,18 +63,6 @@ public abstract class GameManager : MonoBehaviour
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
     }
 
-    public virtual void PositionPlayer(int id)
-    {
-        Vector3 spawnPos = new Vector3(0f, 0f, 0f);
-
-        /*if (playerList.Count == 0)
-            spawnPos = spawnPointR1.position;
-        else
-            spawnPos = spawnPointJ2.position;*/
-
-        PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
-    }
-
     public virtual void RestartGame()
     {
         ui.SetDeathScreen(false);
@@ -82,12 +70,17 @@ public abstract class GameManager : MonoBehaviour
             player.RespawnPlayer(spawnPointJ2);
     }
 
-    public static void OnPlayerJoin(PlayerController player)
+    protected void OnPlayerJoin(PlayerController player, int id)
     {
         playerList.Add(player);
+
+        if (id > 1001)
+            player.MovePlayer(spawnPointJ2.position);
+        else
+            player.MovePlayer(spawnPointR1.position);
     }
 
-    public static void OnPlayerLeave(PlayerController player)
+    protected void OnPlayerLeave(PlayerController player)
     {
         playerList.Remove(player);
     }
