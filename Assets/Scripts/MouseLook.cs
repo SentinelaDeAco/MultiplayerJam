@@ -8,7 +8,6 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     public float mouseSensitivity = 100f;
     private float xRotation = 0f;
-    public Transform playerBody;
     private PlayerController playerController;
 
     private void OnEnable()
@@ -68,7 +67,7 @@ public class MouseLook : MonoBehaviour
         if (Physics.Raycast(instance.playerCamera.ViewportPointToRay(new Vector2(0.5f, 0.5f)),
             out RaycastHit hit, interactionDistance))
         {
-            return hit.collider.gameObject.GetInstanceID() == currentInteractable.gameObject.GetInstanceID();
+            return hit.collider.gameObject.GetInstanceID() == hit.collider.gameObject.GetInstanceID();
         }
         return false;
     }

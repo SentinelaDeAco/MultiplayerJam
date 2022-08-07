@@ -18,12 +18,6 @@ public abstract class GameManager : MonoBehaviour
         SpawnPlayer();
     }
 
-    private void Update()
-    {
-
-        Debug.Log(playerList.Count);
-    }
-
     protected virtual void OnEnable()
     {
         Actions.OnPlayerJoin += OnPlayerJoin;
@@ -54,11 +48,6 @@ public abstract class GameManager : MonoBehaviour
     public virtual void SpawnPlayer()
     {
         Vector3 spawnPos = new Vector3(0f, 0f, 0f);
-
-        /*if (playerList.Count == 0)
-            spawnPos = spawnPointR1.position;
-        else
-            spawnPos = spawnPointJ2.position;*/
 
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
     }

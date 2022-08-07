@@ -23,5 +23,7 @@ public class ButtonEvent : Interactable
 
         if (closestPlayer != null)
             Actions.OnButtonPress(isSolution, closestPlayer);
+
+        this.gameObject.GetComponent<Animator>().SetTrigger("Pull");
     }
 }
