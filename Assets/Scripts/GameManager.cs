@@ -24,6 +24,7 @@ public abstract class GameManager : MonoBehaviour
         Actions.OnPlayerRespawn += RestartGame;
         Actions.OnPlayerDeath += OnFailure;
         Actions.OnPlayerLeave += OnPlayerLeave;
+        Actions.OnPlayerFalling += MovePlayer;
     }
 
     protected virtual void OnDisable()
@@ -32,6 +33,7 @@ public abstract class GameManager : MonoBehaviour
         Actions.OnPlayerRespawn -= RestartGame;
         Actions.OnPlayerDeath -= OnFailure;
         Actions.OnPlayerLeave -= OnPlayerLeave;
+        Actions.OnPlayerFalling -= MovePlayer;
     }
 
     protected virtual void OnVictory() 
@@ -59,11 +61,18 @@ public abstract class GameManager : MonoBehaviour
             player.RespawnPlayer(spawnPointJ2);
     }
 
-    protected void OnPlayerJoin(PlayerController player, int id)
+    protected void OnPlayerJoin(PlayerController player)
     {
         playerList.Add(player);
 
-        if (id > 1001)
+        MovePlayer(player);
+    }
+
+    protected void MovePlayer(PlayerController player)
+    {
+        int id = player.RetrieveId();
+
+        if (id > playerList[0].RetrieveId())
             player.MovePlayer(spawnPointJ2.position);
         else
             player.MovePlayer(spawnPointR1.position);

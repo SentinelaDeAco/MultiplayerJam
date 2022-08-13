@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (view.IsMine)
             OnLocalPlayerCreated?.Invoke(this);
 
-        Actions.OnPlayerJoin(this, view.ViewID);
+        Actions.OnPlayerJoin(this);
     }
 
     void Update()
@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
 
         if (canFall)
             HandleGravity();
+
+        if (transform.position.y < -10.0f)
+            Actions.OnPlayerFalling(this);
     }
 
     private void OnDestroy()
