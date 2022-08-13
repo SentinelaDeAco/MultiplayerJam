@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Rspwn1();
+        Rspwn2();
 
         if (isAlive)
         {
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour
         if (canFall)
             HandleGravity();
 
-        if (transform.position.y < -10.0f)
+        if (transform.position.y < -20.0f)
             Actions.OnPlayerFalling(this);
     }
 
@@ -109,6 +111,18 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown("x"))
             Actions.OnPlayerRespawn();
+    }
+
+    public void Rspwn1()
+    {
+        if (Input.GetKeyDown("n"))
+            Actions.Rspwn1(this);
+    }
+
+    public void Rspwn2()
+    {
+        if (Input.GetKeyDown("m"))
+            Actions.Rspwn2(this);
     }
 
     public void RespawnPlayer(Transform spawnPoint)

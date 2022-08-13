@@ -9,6 +9,7 @@ public class MouseLook : MonoBehaviour
     public float mouseSensitivity = 100f;
     private float xRotation = 0f;
     private PlayerController playerController;
+    private static Interactable currentInteractable;
 
     private void OnEnable()
     {
@@ -43,6 +44,8 @@ public class MouseLook : MonoBehaviour
         
         if (playerController.CheckStatus())
             HandleLook();
+
+        IsLookingToObject2(4f);
     }
 
     public void HandleLook()
@@ -62,14 +65,34 @@ public class MouseLook : MonoBehaviour
         this.playerController = playerController;
     }
 
-    public static bool IsLookingToObject(Interactable currentInteractable, float interactionDistance)
+    /*public static bool IsLookingToObject(Interactable currentInteractable, float interactionDistance)
     {
         if (Physics.Raycast(instance.playerCamera.ViewportPointToRay(new Vector2(0.5f, 0.5f)),
             out RaycastHit hit, interactionDistance))
         {
-            return hit.collider.gameObject.GetInstanceID() == hit.collider.gameObject.GetInstanceID();
+            return hit.collider.gameObject.GetInstanceID() == currentInteractable.GetInstanceID();
         }
         return false;
+    }*/
+
+    public static void IsLookingToObject2(float interactionDistance)
+    {
+        if (Physics.Raycast(instance.playerCamera.ViewportPointToRay(new Vector2(0.5f, 0.5f)),
+            out RaycastHit hit, interactionDistance))
+        {
+            if (hit.collider.gameObject.layer == 6)
+            {
+                hit.collider.TryGetComponent(out currentInteractable);
+
+                if (currentInteractable)
+                    currentInteractable.OnFocus();
+            }
+        }
+        else if (currentInteractable)
+        {
+            currentInteractable.OnLoseFocus();
+            currentInteractable = null;
+        }
     }
 
     public void ResetCamera()

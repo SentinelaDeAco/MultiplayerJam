@@ -365,6 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38502775bcc5a8f45b3c49b47e16dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 106628190}
   interactionDistance: 4
   interactView: {fileID: 0}
   interactKey: 101
@@ -479,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38502775bcc5a8f45b3c49b47e16dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 176096704}
   interactionDistance: 4
   interactView: {fileID: 0}
   interactKey: 101
@@ -916,6 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38502775bcc5a8f45b3c49b47e16dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 576349737}
   interactionDistance: 4
   interactView: {fileID: 0}
   interactKey: 101
@@ -1575,7 +1578,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   room: 1
   ui: {fileID: 1775427410}
-  respawnPoint: {fileID: 333724221}
+  playerPrefab: {fileID: 3553429204434238671, guid: 5372552159cf05a43851dce2914ca600, type: 3}
+  spawnPointJ2: {fileID: 1705544824}
+  spawnPointR1: {fileID: 1705544824}
 --- !u!4 &936922237
 Transform:
   m_ObjectHideFlags: 0
@@ -1834,6 +1839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc655ba5aedcd7940ba56acc75e02d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 1481473191}
   interactionDistance: 4
   interactView: {fileID: 7429648346616916975}
   interactKey: 101
@@ -2199,8 +2205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9be04dc3b11124182c956a2a640a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3553429204434238671, guid: 5372552159cf05a43851dce2914ca600, type: 3}
-  spawnPointOne: {fileID: 333724222}
 --- !u!4 &1705544824
 Transform:
   m_ObjectHideFlags: 0
@@ -2263,6 +2267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38502775bcc5a8f45b3c49b47e16dcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 1714141117}
   interactionDistance: 4
   interactView: {fileID: 0}
   interactKey: 101

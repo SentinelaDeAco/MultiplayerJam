@@ -25,6 +25,8 @@ public abstract class GameManager : MonoBehaviour
         Actions.OnPlayerDeath += OnFailure;
         Actions.OnPlayerLeave += OnPlayerLeave;
         Actions.OnPlayerFalling += MovePlayer;
+        Actions.Rspwn1 += Resp1;
+        Actions.Rspwn2 += Resp2;
     }
 
     protected virtual void OnDisable()
@@ -34,6 +36,8 @@ public abstract class GameManager : MonoBehaviour
         Actions.OnPlayerDeath -= OnFailure;
         Actions.OnPlayerLeave -= OnPlayerLeave;
         Actions.OnPlayerFalling -= MovePlayer;
+        Actions.Rspwn1 -= Resp1;
+        Actions.Rspwn2 -= Resp2;
     }
 
     protected virtual void OnVictory() 
@@ -81,5 +85,15 @@ public abstract class GameManager : MonoBehaviour
     protected void OnPlayerLeave(PlayerController player)
     {
         playerList.Remove(player);
+    }
+
+    protected void Resp1(PlayerController player)
+    {
+        player.RespawnPlayer(spawnPointR1);
+    }
+
+    protected void Resp2(PlayerController player)
+    {
+        player.RespawnPlayer(spawnPointJ2);
     }
 }

@@ -13,7 +13,7 @@ public class ButtonEvent : Interactable
 
         foreach (PlayerController player in GameManager.playerList)
         {
-            float distance = Vector3.Distance(player.transform.position, this.transform.position);
+            float distance = Vector3.Distance(player.transform.position, instance.transform.position);
             if (distance < closestDist)
             {
                 closestPlayer = player;
@@ -24,6 +24,6 @@ public class ButtonEvent : Interactable
         if (closestPlayer != null)
             Actions.OnButtonPress(isSolution, closestPlayer);
 
-        this.gameObject.GetComponent<Animator>().SetTrigger("Pull");
+        instance.gameObject.GetComponent<Animator>().SetTrigger("Pull");
     }
 }
